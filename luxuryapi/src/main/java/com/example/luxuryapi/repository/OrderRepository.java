@@ -40,7 +40,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     """, nativeQuery = true)
     List<Object[]> getAllOrdersForCustomerNative(@Param("custName") Long custName);
 
-    // Return all orders for customer by customer name
+    // Delete order by orderId
     @Query(value = """
     DELETE FROM [Order] WHERE OrderID = :orderId
     """, nativeQuery = true)
