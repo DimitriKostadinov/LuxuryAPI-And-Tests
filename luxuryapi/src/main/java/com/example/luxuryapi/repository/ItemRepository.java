@@ -13,6 +13,35 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long>  {
 
+    // Create new item
+    @Modifying
+    @Transactional
+    @Query(
+            value = """
+        INSERT INTO Item 
+          (Sort, Title, Price, Color, Transparency, Weight_g, Structure, Sustainability, Optical_effect, Purity, Origins, ImagePath, Stock, FK_Category_ID)
+        VALUES
+          (:sort, :title, :price, :color, :transparency, :weight_g, :structure, :sustainability, :optical_effect, :purity, :origins, :imagePath, :stock, :categoryId)
+      """,
+            nativeQuery = true
+    )
+    int insertItem(
+            @Param("sort")           String sort,
+            @Param("title")          String title,
+            @Param("price")          double price,
+            @Param("color")          String color,
+            @Param("transparency")   String transparency,
+            @Param("weight_g")       double weight_g,
+            @Param("structure")      String structure,
+            @Param("sustainability") String sustainability,
+            @Param("optical_effect") String optical_effect,
+            @Param("purity")         String purity,
+            @Param("origins")        String origins,
+            @Param("imagePath")      String imagePath,
+            @Param("stock")          int stock,
+            @Param("categoryId")     Long categoryId
+    );
+
     // Return all Items names
     @Query("SELECT Title FROM Item")
     List<String> getAllItemsName();
